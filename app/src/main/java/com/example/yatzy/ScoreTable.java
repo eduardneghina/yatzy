@@ -1,5 +1,8 @@
 package com.example.yatzy;
 
+import static com.google.android.material.internal.ContextUtils.getActivity;
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,7 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ScoreTable {
+public class ScoreTable{
     Player[] Players;
 
     public ScoreTable(String[] ScoreNames, String[] PlayerNames){
@@ -22,12 +25,6 @@ public class ScoreTable {
 
             this.Players[i] = new Player(i, PlayerNames[i], Scores);
         }
-
-        this.drawTable(this.Players);
-    }
-
-    private void drawTable(Player[] Players){
-//        to do
     }
 
     public Player[] getPlayers(){
