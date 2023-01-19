@@ -12,7 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 public class ScoreTable{
-    Player[] Players;
+    private final Player[] Players;
 
     public ScoreTable(String[] ScoreNames, String[] PlayerNames){
         this.Players = new Player[PlayerNames.length];
