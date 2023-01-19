@@ -20,6 +20,7 @@ public class Player {
     }
 
     public Score[] getScores(){
+
         return this.Scores;
     }
 }
