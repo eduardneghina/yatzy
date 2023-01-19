@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import org.w3c.dom.Text;
 
 public class Game extends Activity {
-    private ScoreTable st;
+    private Player[] players;
     private String gameType;
 
     @Override
@@ -25,7 +25,12 @@ public class Game extends Activity {
         String[] scoreNames = new String[]{"1" ,"2", "3", "4", "5", "6"};
         String[] players = new String[]{"Burlu", "Burlu2"};
 
-        this.st = new ScoreTable(scoreNames, players);
+        this.players = new Player[players.length];
+
+        for (int i=0; i<players.length; i++){
+            ScoreTable st = new ScoreTable(scoreNames);
+            this.players[i] = new Player(i, players[i], st);
+        }
 
         this.drawTable();
     }
@@ -34,7 +39,6 @@ public class Game extends Activity {
         setContentView(R.layout.activity_main);
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
 
-        Player[] players = this.st.getPlayers();
         //Header
         TableRow tbrow = new TableRow(this);
         tbrow.setBackgroundResource(R.drawable.border);
@@ -45,7 +49,7 @@ public class Game extends Activity {
         tbrow.addView(tv);
         stk.addView(tbrow);
 
-        Score[] scores = players[0].getScores();
+        Score[] scores = this.players[0].getScoreTable().getScores();
         for(Score score:scores){
             tbrow = new TableRow(this);
             tbrow.setBackgroundResource(R.drawable.border);
@@ -58,7 +62,7 @@ public class Game extends Activity {
         }
 
 
-        for(Player player : players){
+        for(Player player : this.players){
             tbrow = (TableRow) stk.getChildAt(0);
             tv = new TextView(this);
             tv.setText(player.getName());
@@ -66,7 +70,7 @@ public class Game extends Activity {
             tv.setBackgroundResource(R.drawable.border);
             tbrow.addView(tv);
 
-            scores = player.getScores();
+            scores = player.getScoreTable().getScores();
             for(int i=0; i < scores.length; i++){
                 tv = new TextView(this);
                 tv.setTextColor(Color.BLACK);

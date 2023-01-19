@@ -5,13 +5,13 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Score implements View.OnClickListener{
-    private final String Name;
+    private final String name;
     private int val;
     private int temp_val;
     private TextView tv;
 
-    public Score(String Name){
-        this.Name = Name;
+    public Score(String name){
+        this.name = name;
         this.val = -1;
     }
 
@@ -24,7 +24,7 @@ public class Score implements View.OnClickListener{
     }
 
     public String getName(){
-        return this.Name;
+        return this.name;
     }
 
     public void addView(TextView tv){

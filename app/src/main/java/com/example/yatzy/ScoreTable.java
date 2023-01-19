@@ -12,22 +12,17 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 public class ScoreTable{
-    private final Player[] Players;
+    private final Score[] scores;
 
-    public ScoreTable(String[] ScoreNames, String[] PlayerNames){
-        this.Players = new Player[PlayerNames.length];
-        for(int i = 0; i < PlayerNames.length; i++){
+    public ScoreTable(String[] ScoreNames){
 
-            Score[] Scores = new Score[ScoreNames.length];
-            for(int j=0; j < ScoreNames.length; j++){
-                Scores[j] = new Score(ScoreNames[j]);
-            }
-
-            this.Players[i] = new Player(i, PlayerNames[i], Scores);
+        this.scores = new Score[ScoreNames.length];
+        for(int j=0; j < ScoreNames.length; j++){
+            scores[j] = new Score(ScoreNames[j]);
         }
     }
 
-    public Player[] getPlayers(){
-        return this.Players;
+    public Score[] getScores(){
+        return this.scores;
     }
 }
