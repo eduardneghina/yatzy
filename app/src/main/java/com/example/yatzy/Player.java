@@ -3,12 +3,12 @@ package com.example.yatzy;
 public class Player {
     private final int id;
     private final String name;
-    private Score[] Scores;
+    private ScoreTable scoreTable;
 
-    public Player(int id, String name, Score[] Scores){
+    public Player(int id, String name, ScoreTable st){
         this.id = id;
         this.name = name;
-        this.Scores = Scores;
+        this.scoreTable = st;
     }
 
     public String getName(){
@@ -19,9 +19,9 @@ public class Player {
         return this.id;
     }
 
-    public Score[] getScores(){
+    public ScoreTable getScoreTable(){
 
-        return this.Scores;
+        return this.scoreTable;
     }
 }
 

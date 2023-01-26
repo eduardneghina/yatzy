@@ -3,7 +3,7 @@ package com.example.yatzy;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 public class Game extends Activity {
-    private ScoreTable st;
+    private Player[] players;
     private String gameType;
 
     @Override
@@ -19,10 +19,15 @@ public class Game extends Activity {
         super.onCreate(savedInstanceState);
 
         this.gameType = new String("normal");
-        String[] scoreNames = new String[]{"x3", "x4"};
-        String[] players = new String[]{"Burlu"};
+        String[] scoreNames = new String[]{"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Bonus", "Total", "Three of a kind", "Four of a kind", "Small Straight", "Large Straight", "Full House", "Chance", "Total"};
+        String[] players = new String[]{"Burlu1", "Burlu2", "Burlu3", "Burlu4"};
 
-        this.st = new ScoreTable(scoreNames, players);
+        this.players = new Player[players.length];
+
+        for (int i=0; i<players.length; i++){
+            ScoreTable st = new ScoreTable(scoreNames);
+            this.players[i] = new Player(i, players[i], st);
+        }
 
         this.drawTable();
     }
@@ -30,47 +35,49 @@ public class Game extends Activity {
     private void drawTable(){
         setContentView(R.layout.activity_main);
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
-        TableRow tbrow = new TableRow(this);
-        tbrow.setBackgroundResource(R.drawable.border);
+        stk.setBackgroundResource(R.drawable.border);
 
-        // Header
+        //Header
+        TableRow tbrow = new TableRow(this);
         TextView tv = new TextView(this);
         tv.setText("Scores");
         tv.setTextColor(Color.BLACK);
         tv.setBackgroundResource(R.drawable.border);
         tbrow.addView(tv);
+        stk.addView(tbrow);
 
-        Player[] players = st.getPlayers();
-        for (Player p : players){
+        Score[] scores = this.players[0].getScoreTable().getScores();
+        for(Score score:scores){
+            tbrow = new TableRow(this);
             tv = new TextView(this);
-            tv.setText(p.getName());
+            tv.setText(score.getName());
             tv.setTextColor(Color.BLACK);
             tv.setBackgroundResource(R.drawable.border);
             tbrow.addView(tv);
-        }
-
-        stk.addView(tbrow);
-
-        // Scores
-
-        Score[] scores = players[0].getScores();
-        for (Score score : scores){
-            tbrow = new TableRow(this);
-            TextView tv_score_name = new TextView(this);
-            tv_score_name.setText(score.getName());
-            tv_score_name.setTextColor(Color.BLACK);
-            tv_score_name.setBackgroundResource(R.drawable.border);
-            tbrow.addView(tv_score_name);
-
-            for(Player player : players){
-                tv = new TextView(this);
-                tv.setText("Score_" + player.getName());
-                tv.setTextColor(Color.BLACK);
-                tv.setBackgroundResource(R.drawable.border);
-                tbrow.addView(tv);
-            }
             stk.addView(tbrow);
         }
-        Log.d("Test", "drawn table");
+
+
+        for(Player player : this.players){
+            tbrow = (TableRow) stk.getChildAt(0);
+            tv = new TextView(this);
+            tv.setText(player.getName());
+            tv.setTextColor(Color.BLACK);
+            tv.setBackgroundResource(R.drawable.border);
+            tbrow.addView(tv);
+
+            scores = player.getScoreTable().getScores();
+            for(int i=0; i < scores.length; i++){
+                tv = new TextView(this);
+                tv.setTextColor(Color.BLACK);
+                tv.setBackgroundResource(R.drawable.border);
+                scores[i].addView(tv);
+
+                tbrow = (TableRow) stk.getChildAt(i+1);
+                tbrow.addView(tv);
+            }
+        }
+
+
     }
 }
