@@ -1,5 +1,10 @@
 package com.example.yatzy;
 
+import android.view.View;
+
 public class Dices {
-    int val;
+
+    Calculations calculations = new Calculations();
+    
+
 }
